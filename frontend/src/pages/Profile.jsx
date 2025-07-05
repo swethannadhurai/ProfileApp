@@ -15,7 +15,7 @@ export default function Profile(){
             return;
         }
 
-        axios.get('http://localhost:9000/api/users/profile', {
+        axios.get('https://profileapp-xs6t.onrender.com/api/users/profile', {
             headers: { Authorization: `Bearer ${token}`},
         })
         .then(res => setUser(res.data))
@@ -30,7 +30,7 @@ export default function Profile(){
 
     const updateProfile = async () =>{
         try { 
-            await axios.put('http://localhost:9000/api/users/profile', user, {
+            await axios.put('https://profileapp-xs6t.onrender.com/api/users/profile', user, {
                 headers: {Authorization: `Bearer ${token}`},
             });
             setEditMode(false);

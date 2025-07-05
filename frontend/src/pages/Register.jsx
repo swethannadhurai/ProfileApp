@@ -20,7 +20,7 @@ export default function Register() {
     const handleRegister = async (e)=> {
         e.preventDefault();
         try{ 
-             const res = await axios.post('http://localhost:9000/api/users/register', data);
+             const res = await axios.post('https://profileapp-xs6t.onrender.com/api/users/register', data);
              localStorage.setItem('token', res.data.token);
              alert("Registration Successfull!!!")
              navigate('/login');

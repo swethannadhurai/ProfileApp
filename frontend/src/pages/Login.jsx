@@ -9,7 +9,7 @@ export default function Login(){
     const handleLogin = async (e)=>{
         e.preventDefault();
         try{ 
-            const res = await axios.post('http://localhost:9000/api/users/login', input);
+            const res = await axios.post('https://profileapp-xs6t.onrender.com/api/users/login', input);
             localStorage.setItem('token', res.data.token);
             navigate('/profile');
         }catch (err){
