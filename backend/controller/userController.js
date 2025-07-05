@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 const bcrypt = require('bcryptjs');
+const redisclient = require("../utils/redisclient");
 
 exports.register = async (req, res) =>{
     try{ 
@@ -21,6 +22,9 @@ exports.register = async (req, res) =>{
         const user = await User.create({name, email, password: hashed, age, dob, contact,});
 
         const token = generateToken(user._id);
+        await redisclient.set(token, user._id.toString(), {
+            EX: 60*60*24,
+        })
         res.status(201).json({token});
     }catch (err){
         console.error("Registration error:", err);
@@ -39,6 +43,9 @@ exports.login = async(req,res) => {
         }
 
         const token = generateToken(user._id);
+        await redisclient.set(token, user._id.toString(),{
+            EX: 60 * 60 * 24,
+        });
         res.json({token});
     }catch (err) {
         console.error("Login error:",  err);
