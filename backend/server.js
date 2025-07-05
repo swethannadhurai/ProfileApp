@@ -15,11 +15,13 @@ app.use("/api/users", userRoutes);
 
 mongoose
     .connect(process.env.MONGODB_URI)
-    .then((conn) => console.log("MongoDB connected to:", conn.connection.name))
+    .then(() => console.log("MongoDB connected"))
     .catch((err) => console.error("MongoDB Error:", err));
 
 
-
+app.get("/", (req, res) =>{
+    res.send("Api is running...!!!");
+})
 
 const port = process.env.PORT || 9000;
 app.listen(port, () => console.log(`server running on port ${port}`));
