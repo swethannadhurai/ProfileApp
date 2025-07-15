@@ -60,16 +60,24 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
   try {
     const token = req.cookies.token;
+
     if (token) {
       await redisClient.del(`token:${token}`);
-      res.clearCookie('token');
+      res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+      });
     }
+
+    
     res.status(200).json({ message: 'Logout successful' });
   } catch (err) {
     console.error('Logout error:', err);
-    res.status(500).json({ message: 'Logout failed' });
+    res.status(200).json({ message: 'Logout successful (with warning)' });
   }
 };
+
 
 exports.getProfile = async (req, res) => {
   try {

@@ -35,19 +35,22 @@ export default function Profile() {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "https://profileapp-xs6t.onrender.com/api/users/logout",
-        {},
-        { withCredentials: true }
-      );
-      navigate("/login");
-    } catch (err) {
-      console.error("Logout failed:", err);
-      alert("Logout failed. Please try again.");
-    }
-  };
+   const handleLogout = async () => {
+  try {
+    await axios.post(
+      "https://profileapp-xs6t.onrender.com/api/users/logout",
+      {},
+      { withCredentials: true }
+    );
+    alert("Logout successful!");
+    navigate("/login");
+  } catch (err) {
+    console.error("Logout failed:", err);
+    alert("Logout failed. Please try again.");
+    navigate("/login"); 
+  }
+};
+
 
   const onChange = (e) =>
     setUser({ ...user, [e.target.name]: e.target.value });
