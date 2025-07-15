@@ -10,10 +10,14 @@ exports.register = async (req, res) => {
     if (existing) return res.status(400).json({ message: 'Email already exists' });
 
     const hashed = await bcrypt.hash(password, 10);
-    const user = await User.create({ name, email, password: hashed, age, dob, contact });
+    const parsedDob = new Date(dob);
+    if (isNaN(parsedDob.getTime())) {
+      return res.status(400).json({ message: 'Invalid date format for DOB' });
+    }
+    const user = await User.create({ name, email, password: hashed, age, dob: parsedDob, contact });
 
     const token = generateToken(user._id);
-    await redisClient.set(`token:${token}`, user._id.toString(), { EX: 86400 }); // 1 day
+    await redisClient.set(`token:${token}`, user._id.toString(), { EX: 86400 }); 
 
     res.cookie('token', token, {
       httpOnly: true,
