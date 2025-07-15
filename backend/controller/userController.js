@@ -56,7 +56,6 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 exports.logout = async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -66,17 +65,18 @@ exports.logout = async (req, res) => {
       res.clearCookie('token', {
         httpOnly: true,
         secure: true,
-        sameSite: 'none'
+        sameSite: 'none',
+        path: '/', 
       });
     }
 
-    
     res.status(200).json({ message: 'Logout successful' });
   } catch (err) {
     console.error('Logout error:', err);
     res.status(200).json({ message: 'Logout successful (with warning)' });
   }
 };
+
 
 
 exports.getProfile = async (req, res) => {

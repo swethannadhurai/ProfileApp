@@ -35,21 +35,28 @@ export default function Profile() {
     }
   };
 
-   const handleLogout = async () => {
+const handleLogout = async () => {
   try {
-    await axios.post(
+    const res = await axios.post(
       "https://profileapp-xs6t.onrender.com/api/users/logout",
       {},
       { withCredentials: true }
     );
-    alert("Logout successful!");
+
+    if (res.status === 200) {
+      alert(res.data.message || "Logout successful!");
+    } else {
+      alert("Unexpected response. Logout may not have completed.");
+    }
+
     navigate("/login");
   } catch (err) {
     console.error("Logout failed:", err);
-    alert("Logout failed. Please try again.");
-    navigate("/login"); 
+    alert(err.response?.data?.message || "Logout failed. Please try again.");
+    navigate("/login");
   }
 };
+
 
 
   const onChange = (e) =>
