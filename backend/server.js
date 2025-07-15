@@ -9,14 +9,15 @@ dotenv.config();
 
 const app = express();
 
-// CORS setup for Netlify frontend
+
 app.use(cors({
   origin: 'https://superb-jelly-688fc5.netlify.app',
   credentials: true,
 }));
 
-app.use(express.json());
 app.use(cookieParser()); 
+app.use(express.json());
+
 
 
 app.use("/api/users", userRoutes);
